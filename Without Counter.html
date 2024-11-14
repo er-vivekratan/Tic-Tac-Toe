@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display&display=swap" rel="stylesheet">
     <title>Tic-Tac-Toe</title>
     <style>
         body {
@@ -17,15 +15,6 @@
             text-align: center;
             background: #f0f0f0;
         }
-        div[id="scoreboard"]{
-            position: absolute;
-            margin-top: -470px;
-            display: flex;
-            justify-content: space-evenly;
-            width: 296px;
-            font-size: 21px;
-            font-family: Funnel Display;
-        }
         div[id="block"]{
             height: auto;
             width: 296px;
@@ -36,6 +25,7 @@
             border-radius: 50px;
             justify-content: center;
             text-align: center;
+            font-family: Cambria Math;
         }
         input[class="XO"]{
             position: relative;
@@ -88,19 +78,14 @@
             border-bottom: none;
             border-right: none;
         }
-        label[id="love"]{
+        label{
             position: absolute;
             margin-left: -250px;
             margin-top: 130px;
-            font-family: Quicksand;
         }
     </style>
 </head>
 <body>
-    <div id="scoreboard">
-        <p>X Wins:<span id="x-wins">0</span>&nbsp&nbsp&nbsp
-        O Wins: <span id="o-wins">0</span></p>
-    </div>
     <div id="block">
         <input type="button" value="" id="1" class="XO" onclick="entry(this)">
         <input type="button" value="" id="2" class="XO" onclick="entry(this)">
@@ -111,15 +96,17 @@
         <input type="button" value="" id="7" class="XO" onclick="entry(this)">
         <input type="button" value="" id="8" class="XO" onclick="entry(this)">
         <input type="button" value="" id="9" class="XO" onclick="entry(this)">
-        <label id="love">Made with <font color="red">❤</font> by Vivek Ratan</label>
+
+        <label>Made with
+            <font color="red">❤
+            </font> by Vivek Ratan
+            </label>
     </div>
-    
     
 
 <script>
+
 let turn = (Math.random() < 0.5) ? "X" : "O";
-let xWins = 0;
-let oWins = 0;
 console.log(turn + " turn");
 
 function entry(button) {
@@ -128,13 +115,6 @@ function entry(button) {
         const winner = checkWin();
         if (winner) {
             alert(winner + " wins!");
-            if (winner === "X") {
-                xWins++;
-                document.getElementById("x-wins").textContent = xWins;
-            } else {
-                oWins++;
-                document.getElementById("o-wins").textContent = oWins;
-            }
             resetGame();
         } else if (isBoardFull()) {
             alert("No one wins!");
