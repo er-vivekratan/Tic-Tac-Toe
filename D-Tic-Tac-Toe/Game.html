@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display&display=swap" rel="stylesheet">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            background: #f0f0f0;
+        }
+        div[id="scoreboard"]{
+            position: absolute;
+            margin-top: -470px;
+            display: flex;
+            justify-content: space-evenly;
+            width: 296px;
+            font-size: 21px;
+            font-family: Funnel Display;
+        }
+        div[id="block"]{
+            height: 290px;
+            width: 290px;
+            background: url("tic-tac-toe.png");
+            background-size: cover;
+            padding: 10px;
+            position: absolute;
+            border-radius: 50px;
+            justify-content: center;
+            text-align: center;
+        }
+        input[class="XO"]{
+            position: relative;
+            height: 95px;
+            width: 95px;
+            font-size: 24px;
+            margin-left: -4px;
+            font-size: 70px;
+            font-family: 'Patrick Hand', cursive;
+            background-color: transparent;
+            outline: none;
+            border: none;
+        }
+        input[id="1"]{
+            bsorder: 4.5px solid rgb(202, 202, 202);
+            border-top: none;
+            border-left: none;
+        }
+        input[id="2"]{
+            bosrder: 4.5px solid rgb(202, 202, 202);
+            border-top: none;
+        }
+        input[id="3"]{
+            borsder: 4.5px solid rgb(202, 202, 202);
+            border-top: none;
+            border-right: none;
+        }
+        input[id="4"]{
+            bordser: 4.5px solid rgb(202, 202, 202);
+            border-left: none;
+        }
+        input[id="5"]{
+            bordser: 4.5px solid rgb(202, 202, 202);
+        }
+        input[id="6"]{
+            bordser: 4.5px solid rgb(202, 202, 202);
+            border-right: none;
+        }
+        input[id="7"]{
+            borsder: 4.5px solid rgb(202, 202, 202);
+            border-bottom: none;
+            border-left: none;
+        }
+        input[id="8"]{
+            borsder: 4.5px solid rgb(202, 202, 202);
+            border-bottom: none;
+        }
+        input[id="9"]{
+            borsder: 4.5px solid rgb(202, 202, 202);
+            border-bottom: none;
+            border-right: none;
+        }
+        label[id="love"]{
+            position: absolute;
+            margin-left: -250px;
+            margin-top: 130px;
+            font-family: Quicksand;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">
+        <p>X Wins: <span id="x-wins">0</span>&nbsp&nbsp&nbsp
+        O Wins: <span id="o-wins">0</span></p>
+    </div>
+    <div id="block">
+        <input type="button" value="" id="1" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="2" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="3" class="XO" onclick="entry(this)"><br>
+        <input type="button" value="" id="4" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="5" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="6" class="XO" onclick="entry(this)"><br>
+        <input type="button" value="" id="7" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="8" class="XO" onclick="entry(this)">
+        <input type="button" value="" id="9" class="XO" onclick="entry(this)">
+        <label id="love">Made with <font color="red">❤</font> by Vivek Ratan</label>
+    </div>
+    
+    
+
+<script>
+let turn = (Math.random() < 0.5) ? "X" : "O";
+let xWins = 0;
+let oWins = 0;
+console.log(turn + " turn");
+
+function entry(button) {
+    if (button.value === "") {
+        button.value = turn;
+        const winner = checkWin();
+        if (winner) {
+            alert(winner + " wins!");
+            if (winner === "X") {
+                xWins++;
+                document.getElementById("x-wins").textContent = xWins;
+            } else {
+                oWins++;
+                document.getElementById("o-wins").textContent = oWins;
+            }
+            resetGame();
+        } else if (isBoardFull()) {
+            alert("No one wins!");
+            resetGame();
+        } else {
+            turn = (turn === "X") ? "O" : "X";
+            console.log(turn + " turn");
+        }
+    }
+}
+
+function checkWin() {
+    const winningCombinations = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9], // rows
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9], // columns
+        [1, 5, 9],
+        [3, 5, 7]  // diagonals
+    ];
+    
+    for (let combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (
+            document.getElementById(a).value &&
+            document.getElementById(a).value === document.getElementById(b).value &&
+            document.getElementById(b).value === document.getElementById(c).value
+        ) {
+            return document.getElementById(a).value;
+        }
+    }
+    return null;
+}
+
+function isBoardFull() {
+    for (let i = 1; i <= 9; i++) {
+        if (document.getElementById(i).value === "") {
+            return false;
+        }
+    }
+    return true;
+}
+
+function resetGame() {
+    for (let i = 1; i <= 9; i++) {
+        document.getElementById(i).value = "";
+    }
+    turn = (Math.random() < 0.5) ? "X" : "O";
+    console.log("Game reset. " + turn + " turn");
+}
+
+</script>
+</body>
+</html>
